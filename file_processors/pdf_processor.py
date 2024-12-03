@@ -21,14 +21,19 @@ def load_pdf(file_path: str, file_type: str, metadata: dict, connection_string: 
     print(f"Processing PDF document: {file_path}")
     
     try:
+        print(f"Processing A")
         # Initialize components
         llm = ChatOpenAI(temperature=0, model="gpt-4-turbo")
         embeddings = OpenAIEmbeddings()
         metadata["file_type"] = "pdf"
 
+        print(f"Processing B")
+
         # Load PDF
         loader = PyPDFLoader(file_path)
+        print(f"Processing C")
         full_document = loader.load()
+        print(f"Processing D")
 
         if not full_document:
             print("Warning: Empty PDF document loaded")
@@ -40,16 +45,20 @@ def load_pdf(file_path: str, file_type: str, metadata: dict, connection_string: 
             chunk_overlap=200,
             length_function=len,
         )
+        print(f"Processing E")
         split_documents = text_splitter.split_documents(full_document)
+        print(f"Processing F")
 
         # Add metadata to all document chunks
         for doc in split_documents:
             doc.metadata = metadata
 
+        print(f"Processing G")
         # Initialize memory components
         memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
         read_only_memory = ReadOnlySharedMemory(memory=memory)
 
+        print(f"Processing H")
         # Create vector stores
         vector_store = PGVector.from_documents(
             documents=split_documents,
@@ -57,12 +66,14 @@ def load_pdf(file_path: str, file_type: str, metadata: dict, connection_string: 
             connection_string=connection_string
         )
         
+        print(f"Processing I")
         full_doc_vector_store = PGVector.from_documents(
             documents=full_document,
             embedding=embeddings,
             ids=["full doc"],
             connection_string=connection_string
         )
+        print(f"Processing J")
 
         # Generate document summaries
         DocumentSummaries(
@@ -73,6 +84,7 @@ def load_pdf(file_path: str, file_type: str, metadata: dict, connection_string: 
             metadata=metadata,
             connection_string=connection_string
         )
+        print(f"Processing K")
         
         print("PDF processing complete")
         

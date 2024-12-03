@@ -19,6 +19,9 @@ class CLIPMultimodalProcessor:
                  model_name: str = "openai/clip-vit-base-patch32",
                  connection_string: Optional[str] = None):
         """Initialize CLIP model and processor."""
+        print("CLIPMultimodalProcessor init")
+        print("model_name", model_name)
+        print("connection_string", connection_string)
         self.model = CLIPModel.from_pretrained(model_name)
         self.processor = CLIPProcessor.from_pretrained(model_name)
         self.connection_string = connection_string
@@ -130,7 +133,9 @@ def create_streamlit_ui():
     st.write("Upload images and enter text descriptions to analyze similarities.")
 
     # Initialize processors
+    print("CLIPMultimodalProcessor A")
     clip_processor = CLIPMultimodalProcessor()
+    print("CLIPMultimodalProcessor B")
     visualizer = DataVisualizer()
 
     # Sidebar for settings
@@ -170,6 +175,7 @@ def create_streamlit_ui():
         st.header("Analysis Results")
 
         try:
+            print("CLIPMultimodalProcessor C")
             # Process images and texts
             image_embeddings = [clip_processor.process_image(img) for img in images]
             text_embeddings = [clip_processor.process_text(text) for text in texts]
@@ -179,6 +185,7 @@ def create_streamlit_ui():
                 image_embeddings, 
                 text_embeddings
             )
+            print("CLIPMultimodalProcessor D")
 
             # Create visualizations based on selection
             if visualization_type in ["Heatmap", "Both"]:

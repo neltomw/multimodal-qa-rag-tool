@@ -77,7 +77,9 @@ class ImageDocProcessor:
         self.connection_string = connection_string
     
     def process(self, file_path, file_type):
-        return CLIPMultimodalProcessor(file_path, file_type, self.connection_string)
+        print("CLIPMultimodalProcessor E")
+        clip_processor = CLIPMultimodalProcessor(connection_string=self.connection_string)
+        return clip_processor.process_image(file_path)
         
 class DocumentProcessor:
     def __init__(self, connection_string: str, collection_ids: str, metadata: dict):
@@ -104,7 +106,10 @@ class DocumentProcessor:
                     "youtube": YouTubeProcessor(connection_string, metadata),
                     #"gdoc": GoogleDocProcessor(connection_string, metadata),
                     #"gexcel": GoogleDocProcessor(connection_string, metadata),
-                    "image": ImageDocProcessor(connection_string, metadata)
+                    "image": ImageDocProcessor(connection_string, metadata),
+                    "jpg": ImageDocProcessor(connection_string, metadata),
+                    "jpeg": ImageDocProcessor(connection_string, metadata),
+                    "png": ImageDocProcessor(connection_string, metadata)
 
                     }
                 processor = processor_map.get(file_type)

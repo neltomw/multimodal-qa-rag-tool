@@ -77,7 +77,7 @@ class RAGSystemCLI:
             "--types",
             nargs="+",
             required=True,
-            help="Document types (pdf, txt, csv, etc.)"
+            help="Document types (pdf, txt, csv, jpeg, jpg, etc.)"
         )
         parser.add_argument(
             "--metadata",
