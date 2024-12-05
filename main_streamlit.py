@@ -29,7 +29,9 @@ class RAGSystemUI:
             "CSV": "csv",
             "Word": "docx",
             "PowerPoint": "pptx",
-            "Excel": "xlsx"
+            "Excel": "xlsx",
+            "JPEG": "jpeg",
+            "PNG": "png"
         }
 
     def setup_page_config(self):
